@@ -8,14 +8,6 @@
 
 namespace dxvk {
   
-  /**
-   * \brief Sync mode
-   */
-  enum class D3D11SwapChainSyncMode : int32_t {
-    Default   = 0,
-    Mailbox   = 1,
-  };
-  
   struct D3D11Options {
     D3D11Options(const Config& config);
     /// Handle D3D11_MAP_FLAG_DO_NOT_WAIT properly.
@@ -68,13 +60,14 @@ namespace dxvk {
     /// passed to IDXGISwapChain::Present.
     int32_t syncInterval;
 
+    /// Override maximum frame latency if the app specifies
+    /// a higher value. May help with frame timing issues.
+    int32_t maxFrameLatency;
+
     /// Defer surface creation until first present call. This
     /// fixes issues with games that create multiple swap chains
     /// for a single window that may interfere with each other.
     bool deferSurfaceCreation;
-
-    /// Vsync mode
-    D3D11SwapChainSyncMode syncMode;
   };
   
 }
